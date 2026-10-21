@@ -1,0 +1,58 @@
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+
+    const userMessage = { sender: "user", text: input };
+    setMessages([...messages, userMessage]);
+
+    try {
+      const res = await fetch("https://movie-chatbot-seven.vercel.app/api/message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: input })
+      });
+
+      const data = await res.json();
+      const botMessage = { sender: "bot", text: data.reply };
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: "Помилка з'єднання з сервером." }
+      ]);
+    }
+
+    setInput("");
+  };
+
+  return (
+    <div className="chat-container">
+      <h1>🎬 Movie Chatbot</h1>
+
+      <div className="chat-window">
+        {messages.map((msg, i) => (
+          <div key={i} className={`message ${msg.sender}`}>
+            {msg.text}
+          </div>
+        ))}
+      </div>
+
+      <div className="input-area">
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Введіть повідомлення..."
+        />
+        <button onClick={sendMessage}>Надіслати</button>
+      </div>
+    </div>
+  );
+}
+
+export default App;
