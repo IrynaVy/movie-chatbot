@@ -1,12 +1,21 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const Message = require("../models/Message");
 
-router.post('/', (req, res) => {
-    const userText = req.body.text;
+// GET
+router.get("/", async (req, res) => {
+  const messages = await Message.find();
+  res.json(messages);
+});
 
-    res.json({
-        reply: `Ти написала: "${userText}". Я скоро навчуся радити фільми!`
-    });
+// POST
+router.post("/", async (req, res) => {
+  const { sender, text } = req.body;
+
+  const msg = new Message({ sender, text });
+  await msg.save();
+
+  res.json({ status: "saved", message: msg });
 });
 
 module.exports = router;

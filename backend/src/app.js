@@ -1,40 +1,34 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../swagger/swagger.json");
+
+dotenv.config({ path: __dirname + "/../.env" });
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Movie chatbot backend is running!');
-});
+// Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-const messageRoute = require('./routes/message');
-app.use('/api/message', messageRoute);
+// Routes
+const messageRoutes = require("./routes/message");
+app.use("/api/message", messageRoutes);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+async function startServer() {
+  try {
+    await mongoose.connect("mongodb+srv://IrynaVy:1111@cluster0.ykogt20.mongodb.net/movie-chatbot?retryWrites=true&w=majority");
+    console.log("MongoDB connected");
 
-const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGO_URI);
+    app.listen(process.env.PORT, () => {
+      console.log(`Server running on port ${process.env.PORT}`);
+    });
+  } catch (err) {
+    console.error("Error starting server:", err);
+  }
+}
 
-const Message = mongoose.model("Message", {
-  sender: String,
-  text: String,
-  timestamp: Date
-});
-
-await Message.create({
-  sender: "user",
-  text: req.body.text,
-  timestamp: new Date()
-});
-
-await Message.create({
-  sender: "bot",
-  text: reply,
-  timestamp: new Date()
-});
+startServer();

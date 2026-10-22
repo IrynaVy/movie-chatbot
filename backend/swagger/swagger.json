@@ -1,0 +1,37 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Movie Chatbot API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/messages": {
+      "get": {
+        "summary": "Отримати всі повідомлення",
+        "responses": {
+          "200": { "description": "Успішно отримано" }
+        }
+      },
+      "post": {
+        "summary": "Створити повідомлення",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sender": { "type": "string" },
+                  "text": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Повідомлення збережено" }
+        }
+      }
+    }
+  }
+}
