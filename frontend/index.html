@@ -9,24 +9,21 @@
 </head>
 <body>
 
+    <div id="mainContainer">
     <form id="userForm">
-    <input type="text" id="name" placeholder="Ваше ім'я" required>
-    <input type="email" id="email" placeholder="Email" required>
-    <textarea id="message" placeholder="Повідомлення" required></textarea>
-    <button type="submit">Надіслати</button>
+        <input type="text" id="name" placeholder="Ваше ім'я" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <textarea id="message" placeholder="Повідомлення" required></textarea>
+        <button type="submit">Надіслати</button>
+        <p id="status"></p>
     </form>
 
-    <p id="status"></p>
-
-    <div class="chat-container">
-        <h1>🎬 Movie Chatbot</h1>
-
-        <div id="chat-window" class="chat-window"></div>
-
-        <div class="input-area">
-            <input id="user-input" type="text" placeholder="Введіть повідомлення...">
-            <button id="send-btn">Надіслати</button>
-        </div>
+    <div id="chatContainer">
+        <h2>🎬 Movie Chatbot</h2>
+        <div id="chat-window"></div>
+        <input type="text" id="user-input" placeholder="Введіть повідомлення...">
+        <button id="send-btn">Надіслати</button>
+    </div>
     </div>
 
     <script src="script.js"></script>
