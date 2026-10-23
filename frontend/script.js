@@ -32,3 +32,33 @@ function addMessage(text, sender) {
     chatWindow.appendChild(div);
     chatWindow.scrollTop = chatWindow.scrollHeight;
 }
+
+const userForm = document.getElementById("userForm");
+
+if (userForm) {
+  userForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value
+    };
+
+    // LocalStorage
+    localStorage.setItem("userName", data.name);
+    localStorage.setItem("userEmail", data.email);
+
+    // SessionStorage
+    sessionStorage.setItem("lastMessage", data.message);
+
+    const res = await fetch("https://movie-chatbot-zzlw.onrender.com/api/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+    document.getElementById("status").innerText = result.message;
+  });
+}
