@@ -31,4 +31,7 @@ async function startServer() {
   }
 }
 
+const userRoutes = require("./routes/user");
+app.use("/api/user", userRoutes);
+
 startServer();
