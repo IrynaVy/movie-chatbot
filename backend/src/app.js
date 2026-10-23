@@ -18,6 +18,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const messageRoutes = require("./routes/message");
 app.use("/api/message", messageRoutes);
 
+const userRoutes = require("./routes/user");
+app.use("/api/user", userRoutes);
+
 async function startServer() {
   try {
     await mongoose.connect("mongodb+srv://IrynaVy:1111@cluster0.ykogt20.mongodb.net/movie-chatbot?retryWrites=true&w=majority");
@@ -30,8 +33,5 @@ async function startServer() {
     console.error("Error starting server:", err);
   }
 }
-
-const userRoutes = require("./routes/user");
-app.use("/api/user", userRoutes);
 
 startServer();
