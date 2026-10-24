@@ -21,6 +21,11 @@ app.use("/api/message", messageRoutes);
 const userRoutes = require("./routes/user");
 app.use("/api/user", userRoutes);
 
+// ⭐ Маршрут для кореня
+app.get("/", (req, res) => {
+  res.send("Backend for LR5 is running 🚀");
+});
+
 async function startServer() {
   try {
     await mongoose.connect("mongodb+srv://IrynaVy:1111@cluster0.ykogt20.mongodb.net/movie-chatbot?retryWrites=true&w=majority");
