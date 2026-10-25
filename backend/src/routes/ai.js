@@ -11,24 +11,27 @@ router.post("/", async (req, res) => {
     }
 
     const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
+      "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct",
       {
-        model: "gpt-4o-mini",
-        messages: [{ role: "user", content: userMessage }]
+        inputs: userMessage
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${process.env.HF_TOKEN}`,
           "Content-Type": "application/json"
         }
       }
     );
 
-    res.json({ reply: response.data.choices[0].message.content });
+    const reply =
+      response.data?.[0]?.generated_text ||
+      "Модель не повернула текст 😕";
+
+    res.json({ reply });
 
   } catch (err) {
-    console.error("AI error:", err.response?.data || err.message);
-    res.status(500).json({ error: "AI error", details: err.message });
+    console.error("HF error:", err.response?.data || err.message);
+    res.status(500).json({ error: "HF error", details: err.message });
   }
 });
 
