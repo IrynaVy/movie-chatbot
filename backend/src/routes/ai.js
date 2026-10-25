@@ -12,9 +12,7 @@ router.post("/", async (req, res) => {
 
     const response = await axios.post(
       "https://api-inference.huggingface.com/models/facebook/blenderbot-400M-distill",
-      {
-        inputs: userMessage
-      },
+      { inputs: userMessage },
       {
         headers: {
           Authorization: `Bearer ${process.env.HF_TOKEN}`,
