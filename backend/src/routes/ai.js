@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     }
 
     const response = await axios.post(
-      "https://api-inference.huggingface.com/models/facebook/blenderbot-400M-distill",
+      "https://api-inference.huggingface.com/models/microsoft/DialoGPT-medium",
       { inputs: userMessage },
       {
         headers: {
