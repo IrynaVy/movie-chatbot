@@ -11,10 +11,10 @@ router.post("/", async (req, res) => {
     }
 
     const response = await axios.post(
-      "https://api.openai.com/v1/responses",
+      "https://api.openai.com/v1/chat/completions",
       {
         model: "gpt-4o-mini",
-        input: userMessage
+        messages: [{ role: "user", content: userMessage }]
       },
       {
         headers: {
@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
       }
     );
 
-    res.json({ reply: response.data.output_text });
+    res.json({ reply: response.data.choices[0].message.content });
 
   } catch (err) {
     console.error("AI error:", err.response?.data || err.message);
