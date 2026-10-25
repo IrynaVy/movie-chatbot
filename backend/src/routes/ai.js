@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     }
 
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B-Instruct",
+      "https://api-inference.huggingface.com/models/meta-llama/Meta-Llama-3-8B-Instruct",
       {
         inputs: userMessage
       },
