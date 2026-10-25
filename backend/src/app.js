@@ -26,6 +26,10 @@ app.get("/", (req, res) => {
   res.send("Backend for LR5 is running 🚀");
 });
 
+// AI маршрут
+const aiRoutes = require("./routes/ai");
+app.use("/api/ai", aiRoutes);
+
 async function startServer() {
   try {
     await mongoose.connect("mongodb+srv://IrynaVy:1111@cluster0.ykogt20.mongodb.net/movie-chatbot?retryWrites=true&w=majority");
