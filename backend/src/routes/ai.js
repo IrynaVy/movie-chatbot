@@ -7,24 +7,24 @@ router.post("/", async (req, res) => {
     const userMessage = req.body.text;
 
     const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY,
       {
-        model: "gpt-4o-mini",
-        messages: [{ role: "user", content: userMessage }]
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-          "Content-Type": "application/json"
-        }
+        contents: [
+          {
+            parts: [
+              { text: userMessage }
+            ]
+          }
+        ]
       }
     );
 
-    const reply = response.data.choices[0].message.content;
+    const reply = response.data.candidates[0].content.parts[0].text;
     res.json({ reply });
+
   } catch (err) {
-    console.error("OpenAI error:", err.response?.data || err.message);
-    res.status(500).json({ error: "OpenAI error", details: err.message });
+    console.error("Gemini error:", err.response?.data || err.message);
+    res.status(500).json({ error: "Gemini error", details: err.message });
   }
 });
 
