@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     }
 
     const response = await axios.post(
-      "https://api-inference.huggingface.com/models/microsoft/DialoGPT-medium",
+      "https://api-inference.huggingface.com/models/google/gemma-2b-it",
       { inputs: userMessage },
       {
         headers: {
