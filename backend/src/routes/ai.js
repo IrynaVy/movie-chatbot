@@ -11,25 +11,19 @@ router.post("/", async (req, res) => {
     }
 
     const response = await axios.post(
-      "https://api-inference.huggingface.com/models/mistralai/Mistral-7B-Instruct-v0.2",
-      { inputs: userMessage },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.HF_TOKEN}`,
-          "Content-Type": "application/json"
-        }
-      }
+      "https://hf.space/embed/microsoft/DialoGPT-medium/+/api/predict/",
+      { data: [userMessage] }
     );
 
     const reply =
-      response.data?.[0]?.generated_text ||
+      response.data?.data?.[0] ||
       "Модель не повернула текст 😕";
 
     res.json({ reply });
 
   } catch (err) {
-    console.error("HF error:", err.response?.data || err.message);
-    res.status(500).json({ error: "HF error", details: err.message });
+    console.error("HF proxy error:", err.response?.data || err.message);
+    res.status(500).json({ error: "HF proxy error", details: err.message });
   }
 });
 
