@@ -9,10 +9,10 @@ function App() {
     if (!input.trim()) return;
 
     const userMessage = { sender: "user", text: input };
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const res = await fetch("https://movie-chatbot-seven.vercel.app/api/message", {
+      const res = await fetch("https://movie-chatbot-4-ic37.onrender.com/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: input })
