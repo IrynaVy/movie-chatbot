@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <title>Movie Chatbot — ЛР2</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+  <meta charset="UTF-8">
+  <title>Movie Chatbot — ЛР6</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="chatContainer">
+    <h2>🎬 Movie Chatbot</h2>
+    <div id="chat-window"></div>
 
-    <div id="mainContainer">
-    <form id="userForm">
-        <input type="text" id="name" placeholder="Ваше ім'я" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <textarea id="message" placeholder="Повідомлення" required></textarea>
-        <button type="submit">Надіслати</button>
-        <p id="status"></p>
-    </form>
+    <input type="text" id="user-input" placeholder="Введіть повідомлення..." />
+    <button id="send-btn">Надіслати</button>
+  </div>
 
-    <div id="chatContainer">
-        <h2>🎬 Movie Chatbot</h2>
-        <div id="chat-window"></div>
-        <input type="text" id="user-input" placeholder="Введіть повідомлення...">
-        <button id="send-btn">Надіслати</button>
-    </div>
-    </div>
+  <script>
+    const chatWindow = document.getElementById("chat-window");
+    const sendBtn = document.getElementById("send-btn");
+    const userInput = document.getElementById("user-input");
 
-    <script src="script.js"></script>
+    sendBtn.addEventListener("click", async () => {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      const userMsg = document.createElement("p");
+      userMsg.textContent = `👤 Ви: ${message}`;
+      chatWindow.appendChild(userMsg);
+
+      const response = await fetch("https://movie-chatbot-4-ic37.onrender.com/api/ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: message })
+      });
+
+      const data = await response.json();
+
+      const botMsg = document.createElement("p");
+      botMsg.textContent = `🤖 Бот: ${data.reply}`;
+      chatWindow.appendChild(botMsg);
+
+      userInput.value = "";
+    });
+  </script>
 </body>
 </html>
