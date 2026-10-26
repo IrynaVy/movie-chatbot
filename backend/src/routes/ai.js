@@ -11,19 +11,17 @@ router.post("/", async (req, res) => {
     }
 
     const response = await axios.post(
-      "https://hf.space/embed/microsoft/DialoGPT-medium/+/api/predict/",
+      "https://irynavy-chatbot-static.hf.space/api/predict/",
       { data: [userMessage] }
     );
 
     const reply =
-      response.data?.data?.[0] ||
-      "Модель не повернула текст 😕";
+      response.data?.data?.[0] || "Модель не повернула текст 😕";
 
     res.json({ reply });
-
   } catch (err) {
-    console.error("HF proxy error:", err.response?.data || err.message);
-    res.status(500).json({ error: "HF proxy error", details: err.message });
+    console.error("Space error:", err.response?.data || err.message);
+    res.status(500).json({ error: "Space error", details: err.message });
   }
 });
 
