@@ -7,8 +7,11 @@ router.post("/", async (req, res) => {
     const userMessage = req.body.text;
 
     const response = await axios.post(
-      "https://api-inference.huggingface.com/models/microsoft/DialoGPT-medium",
-      { inputs: userMessage },
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: userMessage }]
+      },
       {
         headers: {
           Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
@@ -17,10 +20,11 @@ router.post("/", async (req, res) => {
       }
     );
 
-    const reply = response.data?.[0]?.generated_text || "Модель не повернула текст 😕";
+    const reply = response.data.choices[0].message.content;
     res.json({ reply });
   } catch (err) {
-    res.status(500).json({ error: "HF error", details: err.message });
+    console.error("OpenAI error:", err.response?.data || err.message);
+    res.status(500).json({ error: "OpenAI error", details: err.message });
   }
 });
 
