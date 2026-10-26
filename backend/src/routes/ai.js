@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     }
 
     const response = await axios.post(
-      "https://api-inference.huggingface.com/models/google/gemma-2b-it",
+      "https://api-inference.huggingface.com/models/mistralai/Mistral-7B-Instruct-v0.2",
       { inputs: userMessage },
       {
         headers: {
