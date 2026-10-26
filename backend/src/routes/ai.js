@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
       { inputs: userMessage },
       {
         headers: {
-          Authorization: `Bearer ${process.env.HF_TOKEN}`,
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           "Content-Type": "application/json"
         }
       }
