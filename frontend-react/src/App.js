@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import ContactForm from "./components/ContactForm";
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -32,27 +33,36 @@ function App() {
   };
 
   return (
-    <div className="chat-container">
+    <div className="page-container">
       <h1>🎬 Movie Chatbot</h1>
 
-      <div className="chat-window">
-        {messages.map((msg, i) => (
-          <div key={i} className={`message ${msg.sender}`}>
-            {msg.text}
+      <div className="content-wrapper">
+        <div className="chat-section">
+          <div className="chat-window">
+            {messages.map((msg, i) => (
+              <div key={i} className={`message ${msg.sender}`}>
+                {msg.text}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="input-area">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Введіть повідомлення..."
-        />
-        <button onClick={sendMessage}>Надіслати</button>
+          <div className="input-area">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Введіть повідомлення..."
+            />
+            <button onClick={sendMessage}>Надіслати</button>
+          </div>
+        </div>
+
+        <div className="form-section">
+          <ContactForm />
+        </div>
       </div>
     </div>
   );
+
 }
 
 export default App;

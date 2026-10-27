@@ -15,6 +15,7 @@
     "dotenv": "^18.0.8",
     "express": "^5.3.0",
     "express-rate-limit": "^7.0.0",
+    "@xenova/transformers": "^0.0.0",
     "mongoose": "^8.0.0",
     "openai": "^4.0.0",
     "sanitize-html": "^2.12.0",
